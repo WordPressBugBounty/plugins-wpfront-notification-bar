@@ -82,7 +82,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Controller
                 add_action('template_redirect', array($this, 'set_landingpage_cookie'));
 
                 if ($this->options->css_enqueue_footer) {
-                    add_action('get_footer', array($this, 'enqueue_styles'));
+                    add_action('wp_footer', array($this, 'enqueue_styles'));
                 } else {
                     add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
                 }
@@ -483,6 +483,17 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Controller
                         }
                         return true;
                     }
+
+                case 5:
+                    if (isset($_SERVER['REQUEST_URI']) && !empty($this->options->filter_url_contains)) {
+                        $v = strpos($_SERVER['REQUEST_URI'], $this->options->filter_url_contains);
+                        if ($v === false) {
+                            $this->log('Filter: Display is set based on text in URL. Current URL is "%s" and URL text is "%s", which is not found, disabling notification.', array($_SERVER['REQUEST_URI'], $this->options->filter_url_contains));
+                            return false;
+                        }
+
+                        return true;
+                    }
             }
 
             return true;
@@ -717,13 +728,24 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Controller
             return $objects;
         }
 
+        /**
+         * Checks whether post contains in filter
+         * 
+         * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+         * @SuppressWarnings(PHPMD.NPathComplexity)
+         *
+         * @param string $list
+         * @param string|int $key
+         * @param boolean $deep
+         * @return bool
+         */
         public function filter_pages_contains($list, $key, $deep = false) {
             $exists = strpos(',' . $list . ',', ',' . $key . ',');
             if ($exists !== false) {
                 return true;
             }
 
-            if (!$deep) {
+            if (!$deep || $key === 'home') {
                 return false;
             }
 
@@ -741,7 +763,17 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Controller
                 }
             }
 
+            $key = (int)$key;
+            if($key === 0) {
+                return false;
+            }
+
             $post_terms = wp_get_post_terms($key, get_taxonomies(), array('fields' => 'ids'));
+
+            if(!is_array($post_terms)) {
+                $post_terms = array();
+            }
+
             $actual_post_terms = array();
             foreach ($post_terms as $post_term) {
                 do {

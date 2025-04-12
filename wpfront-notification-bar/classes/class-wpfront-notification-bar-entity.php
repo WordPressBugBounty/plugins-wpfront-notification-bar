@@ -465,6 +465,13 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Entity')) 
         public $exclude_pages;
 
         /**
+         * URL contains text in filter settings.
+         *
+         * @var string
+         */
+        public $filter_url_contains;
+
+        /**
          * Notification Bar Landing Page Cookie Name.
          * 
          * @var string
@@ -585,6 +592,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Entity')) 
             $this->display_pages = 1;
             $this->include_pages = '';
             $this->exclude_pages = '';
+            $this->filter_url_contains = '';
             $this->landingpage_cookie_name = 'wpfront-notification-bar-landingpage';
             $this->display_roles = 1;
             $this->include_roles = [];
@@ -675,7 +683,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Entity')) 
             $this->end_date = $this->validate_date_range($this->end_date);
             $this->end_time = $this->validate_date_range($this->end_time);
             $this->display_roles = $this->validate_display_roles($this->display_roles);
-            $this->include_roles =  !is_array($this->include_roles) ? $this->validate_include_roles(wp_unslash($this->include_roles)) : $this->include_roles;
+            $this->include_roles =  !is_array($this->include_roles) ? $this->validate_include_roles(wp_unslash($this->include_roles)) : $this->include_roles; //@phpstan-ignore-line
             $this->wp_emember_integration = $this->validate_bool($this->wp_emember_integration);
             $this->last_saved = (int)$this->last_saved;
             $this->message = (string)$this->message;
@@ -686,6 +694,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Entity')) 
             $this->custom_css = sanitize_textarea_field($this->custom_css);
             $this->custom_class = sanitize_text_field($this->custom_class);
             $this->theme_sticky_selector = sanitize_text_field($this->theme_sticky_selector);
+            $this->filter_url_contains = empty($this->filter_url_contains) ? '' : sanitize_text_field($this->filter_url_contains);
         }
 
         /**
@@ -754,6 +763,8 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Entity')) 
                     $this->$prop = $data->$prop;
                 }
             }
+
+            $this->button_action_url_noopener = !empty($data->button_action_url_noopener);
         }
 
         /**
@@ -945,8 +956,8 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Entity')) 
                 return 1;
             }
 
-            if ($arg > 4) {
-                return 4;
+            if ($arg > 5) {
+                return 5;
             }
 
             return $arg;
