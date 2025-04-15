@@ -15,9 +15,6 @@
                 this.minutestohours();
                 if (is_pro) {
                     this.tinymce();
-                    if (data.editor == "visual") {
-                        this.tinymceinit();
-                    }
                 }
             },
             methods: {
@@ -85,6 +82,13 @@
                     }
                 },
                 tinymce(){
+                    if (data.editor == "visual") {
+                        this.tinymceinit();
+                    } else {
+                        if (typeof tinymce !== 'undefined') {
+                            tinymce.remove("textarea#notification-bar-message-text");
+                        }
+                    }
                 },
                 mediaLibrary() {
                     var mediaLibrary = null;

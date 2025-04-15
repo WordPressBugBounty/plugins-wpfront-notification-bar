@@ -174,12 +174,6 @@
                     log('Setting reopen button state to visible.');
                     open_button.removeClass('hidden');
                 }
-
-                if(height > 0){
-                    bar.removeClass('hidden');
-                } else {
-                    bar.addClass('hidden');        
-                }
             };
 
             //set animation
@@ -240,30 +234,29 @@
                 }, 10);
             }
 
-            var $theme_sticky_selector = $(data.theme_sticky_selector);
-            if ($theme_sticky_selector.length == 0 ||  $theme_sticky_selector.css('position') !== 'fixed') {
+            if ($(data.theme_sticky_selector).length == 0) {
                 return 0;
             }
 
             if (data.position == 1) {
                 if (theme_sticky_selector_position === null) {
-                    theme_sticky_selector_position = $theme_sticky_selector.position().top;
+                    theme_sticky_selector_position = $(data.theme_sticky_selector).position().top;
                 }
                 if (bar.is(":visible")) {
-                    $theme_sticky_selector.css("top", (bar.height() + bar.position().top) + "px");
+                    $(data.theme_sticky_selector).css("top", (bar.height() + bar.position().top) + "px");
                 } else {
-                    $theme_sticky_selector.css("top", theme_sticky_selector_position + "px");
+                    $(data.theme_sticky_selector).css("top", theme_sticky_selector_position + "px");
                 }
             }
 
             if (data.position == 2) {
                 if (theme_sticky_selector_position === null) {
-                    theme_sticky_selector_position = $theme_sticky_selector.height() + parseFloat($theme_sticky_selector.css("bottom"));
+                    theme_sticky_selector_position = $(data.theme_sticky_selector).height() + parseFloat($(data.theme_sticky_selector).css("bottom"));
                 }
                 if (bar.is(":visible")) {
-                    $theme_sticky_selector.css("bottom", (bar.height() + parseFloat(bar.css("bottom"))) + "px");
+                    $(data.theme_sticky_selector).css("bottom", (bar.height() + parseFloat(bar.css("bottom"))) + "px");
                 } else {
-                    $theme_sticky_selector.css("bottom", theme_sticky_selector_position + "px");
+                    $(data.theme_sticky_selector).css("bottom", theme_sticky_selector_position + "px");
                 }
             }
 
