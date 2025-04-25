@@ -121,6 +121,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Custom_Css
             background: linear-gradient(to bottom, <?php echo $this->options->button_from_color; ?> 0%, <?php echo $this->options->button_to_color; ?> 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<?php echo $this->options->button_from_color; ?>', endColorstr='<?php echo $this->options->button_to_color; ?>',GradientType=0 );
 
+            background-repeat: no-repeat;
             color: <?php echo $this->options->button_text_color; ?>;
             }
             <?php

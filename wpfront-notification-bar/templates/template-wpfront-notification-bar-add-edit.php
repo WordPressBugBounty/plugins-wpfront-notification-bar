@@ -76,7 +76,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
 
                         if ((isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') || (isset($_GET['updated']) && $_GET['updated'] == 'true')) { //TODO: w3tc test
                             ?>
-                            <div class="updated">
+                            <div class="notice notice-success is-dismissible">
                                 <p>
                                     <strong><?php echo __('If you have a caching plugin, clear the cache for the new settings to take effect.', 'wpfront-notification-bar'); ?></strong>
                                 </p>
@@ -98,7 +98,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php $this->nonce_field(); ?>               
                         <?php $this->script(); ?>
                         <input type="hidden" name="wpfront-notification-bar-options[last_saved]" value="<?php echo time(); ?>" />
-                        <?php submit_button(null, 'primary', 'submit2', false); ?>
+                        <?php submit_button(null, 'primary', 'submit2', false);// @phpstan-ignore-line ?>
                     </form>
                 </div>
             </div>
@@ -230,7 +230,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Enabled', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[enabled]" v-model="enabled" />
+                        <input type="checkbox" id="wpfront-notification-bar-options-enabled" name="wpfront-notification-bar-options[enabled]" v-model="enabled" />
                     </td>
                 </tr>
                 <tr>
@@ -238,12 +238,12 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Preview Mode', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[preview_mode]" v-model="preview_mode" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-preview_mode" name="wpfront-notification-bar-options[preview_mode]" v-model="preview_mode" />&#160;
                         <?php
                         if ($this->options->preview_mode) {
                             $url = $this->controller->get_preview_url();
                             ?>
-                            <span class="description"><a target="_blank" rel="noopener" href="<?php echo $url; ?>"><?php echo $url; ?></a></span>
+                            <span class="description preview-link"><a target="_blank" rel="noopener" href="<?php echo $url; ?>"><?php echo $url; ?></a></span>
                             <?php
                         } else {
                             $description = __('You can test the notification bar without enabling it.', 'wpfront-notification-bar');
@@ -257,7 +257,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Debug Mode', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[debug_mode]" v-model="debug_mode" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-debug_mode" name="wpfront-notification-bar-options[debug_mode]" v-model="debug_mode" />&#160;
                         <?php
                         $description = __('Enable to see logs in browser.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -272,7 +272,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Position', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <select name="wpfront-notification-bar-options[position]" v-model="position">&#160;
+                        <select id="wpfront-notification-bar-options-position" name="wpfront-notification-bar-options[position]" v-model="position">&#160;
                             <option value="1" ><?php echo __('Top', 'wpfront-notification-bar'); ?></option>
                             <option value="2" ><?php echo __('Bottom', 'wpfront-notification-bar'); ?></option>
                         </select>
@@ -283,7 +283,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Fixed at Position', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[fixed_position]" v-model="fixed_position" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-fixed_position" name="wpfront-notification-bar-options[fixed_position]" v-model="fixed_position" />&#160;
                         <?php
                         $description = __('Sticky Bar, bar will stay at position regardless of scrolling.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -295,7 +295,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Theme Sticky Selector', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input class="regular-text" type="text" name="wpfront-notification-bar-options[theme_sticky_selector]" v-model="theme_sticky_selector" />&#160;
+                        <input class="regular-text" type="text" id="wpfront-notification-bar-options-theme_sticky_selector" name="wpfront-notification-bar-options[theme_sticky_selector]" v-model="theme_sticky_selector" />&#160;
                         <?php
                         $description = __('If your page already has a sticky bar enter the element selector here. For example, for Avada theme it will be "<b>.fusion-is-sticky .fusion-header</b>".', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -307,7 +307,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo  __('Display on Scroll', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[display_scroll]" v-model="display_scroll"/>&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-display_scroll" name="wpfront-notification-bar-options[display_scroll]" v-model="display_scroll"/>&#160;
                         <?php
                         $description = __('Displays the bar on window scroll.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -319,7 +319,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Scroll Offset', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[display_scroll_offset]" v-model="display_scroll_offset" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-display_scroll_offset" name="wpfront-notification-bar-options[display_scroll_offset]" v-model="display_scroll_offset" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Number of pixels to be scrolled before the bar appears.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -331,7 +331,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Bar Height', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[height]" v-model="height" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-height" name="wpfront-notification-bar-options[height]" v-model="height" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Set 0px to auto fit contents.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -343,7 +343,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Position Offset', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[position_offset]" v-model="position_offset" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-position_offset" name="wpfront-notification-bar-options[position_offset]" v-model="position_offset" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('(Top bar only) If you find the bar overlapping, try increasing this value. (eg. WordPress 3.8 Twenty Fourteen theme, set 48px)', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -355,7 +355,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Display After', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[display_after]" v-model="display_after" />&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-display_after" name="wpfront-notification-bar-options[display_after]" v-model="display_after" />&#160;
                         <?php echo __('second(s)', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Set 0 second(s) to display immediately. Does not work in "<b>Display on Scroll</b>" mode.', 'wpfront-notification-bar');
@@ -368,7 +368,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Animation Duration', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[animate_delay]" v-model="animate_delay" />&#160;<?php echo __('second(s)', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-animate_delay" name="wpfront-notification-bar-options[animate_delay]" v-model="animate_delay" />&#160;<?php echo __('second(s)', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Set 0 second(s) for no animation.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -380,7 +380,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Display Close Button', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[close_button]" v-model="close_button"/>&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-close_button" name="wpfront-notification-bar-options[close_button]" v-model="close_button"/>&#160;
                         <?php
                         $description = __('Displays a close button at the top right corner of the bar.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -392,7 +392,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Auto Close After', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[auto_close_after]" v-model="auto_close_after" />&#160;<?php echo __('second(s)', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-auto_close_after" name="wpfront-notification-bar-options[auto_close_after]" v-model="auto_close_after" />&#160;<?php echo __('second(s)', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Set 0 second(s) to disable auto close. Do not work in "<b>Display on Scroll</b>" mode.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -404,7 +404,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Display Shadow', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[display_shadow]" v-model="display_shadow" />
+                        <input type="checkbox" id="wpfront-notification-bar-options-display_shadow" name="wpfront-notification-bar-options[display_shadow]" v-model="display_shadow" />
                     </td>
                 </tr>
                 <tr>
@@ -412,7 +412,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Display Reopen Button', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[display_open_button]" v-model="display_open_button" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-display_open_button" name="wpfront-notification-bar-options[display_open_button]" v-model="display_open_button" />&#160;
                         <?php
                         $description = __('A reopen button will be displayed after the bar is closed.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -437,7 +437,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Reopen Button Offset', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[reopen_button_offset]" v-model="reopen_button_offset" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-reopen_button_offset" name="wpfront-notification-bar-options[reopen_button_offset]" v-model="reopen_button_offset" />&#160;<?php echo __('px', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Moves the button more to the left.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -449,7 +449,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Keep Closed', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[keep_closed]" v-model="keep_closed"/>&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-keep_closed" name="wpfront-notification-bar-options[keep_closed]" v-model="keep_closed"/>&#160;
                         <?php
                         $description = __('Once closed, bar will display closed on other pages.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -461,7 +461,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Keep Closed For', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[keep_closed_for]" v-model="keep_closed_for" />&#160;<?php echo __('day(s)', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-keep_closed_for" name="wpfront-notification-bar-options[keep_closed_for]" v-model="keep_closed_for" />&#160;<?php echo __('day(s)', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Bar will be kept closed for the number of days specified from last closed date.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -473,7 +473,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo  __('Keep Closed Cookie Name', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input class="regular-text" type="text" name="wpfront-notification-bar-options[keep_closed_cookie_name]" v-model="keep_closed_cookie_name" />&#160;
+                        <input class="regular-text" type="text" id="wpfront-notification-bar-options-keep_closed_cookie_name" name="wpfront-notification-bar-options[keep_closed_cookie_name]" v-model="keep_closed_cookie_name" />&#160;
                         <?php
                         $description = __('Cookie name used to mark keep closed days. Changing this value will allow you to bypass "<b>Keep Closed For</b>" days and show the notification again.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -485,7 +485,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Set Max Views', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[set_max_views]" v-model="set_max_views"/>&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-set_max_views" name="wpfront-notification-bar-options[set_max_views]" v-model="set_max_views"/>&#160;
                         <?php
                         $description = __('Bar will be hidden after a certain number of views.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -497,7 +497,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Max Views', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[max_views]" v-model="max_views" />&#160;<?php echo __('time(s)', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-max_views" name="wpfront-notification-bar-options[max_views]" v-model="max_views" />&#160;<?php echo __('time(s)', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Maximum number of views.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -509,7 +509,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Max Views For', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="seconds" name="wpfront-notification-bar-options[max_views_for]" v-model="max_views_for" />&#160;<?php echo __('day(s)', 'wpfront-notification-bar'); ?>&#160;
+                        <input type="text" class="seconds" id="wpfront-notification-bar-options-max_views_for" name="wpfront-notification-bar-options[max_views_for]" v-model="max_views_for" />&#160;<?php echo __('day(s)', 'wpfront-notification-bar'); ?>&#160;
                         <?php
                         $description = __('Bar will be kept closed for the number of days specified. Zero means current session.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -521,7 +521,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Max Views Cookie Name', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input class="regular-text" type="text" name="wpfront-notification-bar-options[max_views_cookie_name]" v-model="max_views_cookie_name" />&#160;
+                        <input class="regular-text" type="text" id="wpfront-notification-bar-options-max_views_cookie_name" name="wpfront-notification-bar-options[max_views_cookie_name]" v-model="max_views_cookie_name" />&#160;
                         <?php
                         $description = __('Cookie name used to store view count.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -534,13 +534,12 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     </th>
                     <td>
                         <div>
-                            <label><input type="radio" class="hide_small_device" name="wpfront-notification-bar-options[hide_small_device]" value="all" v-model="hide_small_device" /> <?php echo __('All Devices', 'wpfront-notification-bar'); ?></label>
+                            <label><input type="radio" class="hide_small_device" id="wpfront-notification-bar-options-hide_small_device-all" name="wpfront-notification-bar-options[hide_small_device]" value="all" v-model="hide_small_device" /> <?php echo __('All Devices', 'wpfront-notification-bar'); ?></label>
                             <br />
-                            <label><input type="radio" class="hide_small_device" name="wpfront-notification-bar-options[hide_small_device]" value="small" v-model="hide_small_device" /> <?php echo __('Small Devices', 'wpfront-notification-bar'); ?></label>
+                            <label><input type="radio" class="hide_small_device" id="wpfront-notification-bar-options-hide_small_device-small" name="wpfront-notification-bar-options[hide_small_device]" value="small" v-model="hide_small_device" /> <?php echo __('Small Devices', 'wpfront-notification-bar'); ?></label>
                             <br />
-                            <label><input type="radio" class="hide_small_device" name="wpfront-notification-bar-options[hide_small_device]" value="large" v-model="hide_small_device" /> <?php echo __('Except Small Devices ', 'wpfront-notification-bar'); ?></label>
+                            <label><input type="radio" class="hide_small_device" id="wpfront-notification-bar-options-hide_small_device-large" name="wpfront-notification-bar-options[hide_small_device]" value="large" v-model="hide_small_device" /> <?php echo __('Except Small Devices ', 'wpfront-notification-bar'); ?></label>
                         </div>
-
                     </td>
                 </tr>
                 <tr>
@@ -548,7 +547,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Small Device Max Width', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="pixels" name="wpfront-notification-bar-options[small_device_width]" v-model="small_device_width" />px &#160;
+                        <input type="text" class="pixels" id="wpfront-notification-bar-options-small_device_width" name="wpfront-notification-bar-options[small_device_width]" v-model="small_device_width" />px &#160;
                         <?php
                         $description = __('Devices with width greater than the specified width will be considered as large devices.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -560,7 +559,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Hide on Small Window', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[hide_small_window]" v-model="hide_small_window" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-hide_small_window" name="wpfront-notification-bar-options[hide_small_window]" v-model="hide_small_window" />&#160;
                         <?php
                         $description = __('Notification bar will be hidden on broswer window when the width matches.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -572,7 +571,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Small Window Max Width', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" class="pixels" name="wpfront-notification-bar-options[small_window_width]" v-model="small_window_width" />px &#160;
+                        <input type="text" class="pixels" id="wpfront-notification-bar-options-small_window_width" name="wpfront-notification-bar-options[small_window_width]" v-model="small_window_width" />px &#160;
                         <?php
                         $description = __('Notification bar will be hidden on browser window with lesser or equal width.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -584,7 +583,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Attach on Shutdown', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[attach_on_shutdown]" v-model="attach_on_shutdown" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-attach_on_shutdown" name="wpfront-notification-bar-options[attach_on_shutdown]" v-model="attach_on_shutdown" />&#160;
                         <?php
                         $description = __('Enable as a last resort if the notification bar is not working. This could create compatibility issues.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -603,7 +602,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Set Maximum Width for Message', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[set_full_width_message]" v-model="set_full_width_message" />
+                        <input type="checkbox" id="wpfront-notification-bar-options-set_full_width_message" name="wpfront-notification-bar-options[set_full_width_message]" v-model="set_full_width_message" />
                     </td>
                 </tr>
                 <?php $this->message_field(); ?>           
@@ -612,7 +611,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Message Text Preview', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <textarea rows="5" cols="75" readonly="true"><?php echo esc_textarea($this->controller->get_message_text()); ?></textarea>
+                        <textarea rows="5" cols="75" id="wpfront-notification-bar-message-text-preview" readonly="true"><?php echo esc_textarea($this->controller->get_message_text()); ?></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -620,7 +619,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo  __('Process Shortcode', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[message_process_shortcode]" v-model="message_process_shortcode" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-message_process_shortcode" name="wpfront-notification-bar-options[message_process_shortcode]" v-model="message_process_shortcode" />&#160;
                         <?php
                         $description = __('Processes shortcodes in message text.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -632,7 +631,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Display Button', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[display_button]" v-model="display_button" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-display_button" name="wpfront-notification-bar-options[display_button]" v-model="display_button" />&#160;
                         <?php
                         $description = __('Displays a button next to the message.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -644,7 +643,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Button Text', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" name="wpfront-notification-bar-options[button_text]" v-model="button_text" />
+                        <input type="text" id="wpfront-notification-bar-options-button_text" name="wpfront-notification-bar-options[button_text]" v-model="button_text" />
                     </td>
                 </tr>
                 <tr>
@@ -652,7 +651,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Button Text Preview', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="text" readonly="true" value="<?php echo esc_attr($this->controller->get_button_text()); ?>" />
+                        <input type="text" readonly="true" id="wpfront-notification-bar-options-button-text-preview" value="<?php echo esc_attr($this->controller->get_button_text()); ?>" />
                     </td>
                 </tr>
                 <tr>
@@ -661,18 +660,18 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     </th>
                     <td>
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[button_action]" value="1" v-model="button_action" />
+                            <input type="radio" id="wpfront-notification-bar-options-button_action-url" name="wpfront-notification-bar-options[button_action]" value="1" v-model="button_action" />
                             <span><?php echo __('Open URL:', 'wpfront-notification-bar'); ?></span>
                         </label>
-                        <input type="text" class="URL" name="wpfront-notification-bar-options[button_action_url]" v-model="button_action_url" />
+                        <input type="text" class="URL" id="wpfront-notification-bar-options-button_action_url" name="wpfront-notification-bar-options[button_action_url]" v-model="button_action_url" />
                         <br />
                         <label>
-                            <input type="checkbox" name="wpfront-notification-bar-options[button_action_new_tab]" v-model="button_action_new_tab" />
+                            <input type="checkbox" id="wpfront-notification-bar-options-button_action_new_tab" name="wpfront-notification-bar-options[button_action_new_tab]" v-model="button_action_new_tab" />
                             <span><?php echo __('Open URL in new tab/window.', 'wpfront-notification-bar'); ?></span>
                         </label>
                         <br />
                         <label>
-                            <input type="checkbox" name="wpfront-notification-bar-options[button_action_url_nofollow]" v-model="button_action_url_nofollow" />
+                            <input type="checkbox" id="wpfront-notification-bar-options-button_action_url_nofollow" name="wpfront-notification-bar-options[button_action_url_nofollow]" v-model="button_action_url_nofollow" />
                             <span><?php echo __('No follow link.', 'wpfront-notification-bar'); ?></span>
                         </label>&#160;
                         <?php
@@ -681,7 +680,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         ?>
                         <br />
                         <label>
-                            <input type="checkbox" name="wpfront-notification-bar-options[button_action_url_noreferrer]" v-model="button_action_url_noreferrer" />
+                            <input type="checkbox" id="wpfront-notification-bar-options-button_action_url_noreferrer" name="wpfront-notification-bar-options[button_action_url_noreferrer]" v-model="button_action_url_noreferrer" />
                             <span><?php echo __('No referrer link.', 'wpfront-notification-bar'); ?></span>
                         </label>&#160;
                         <?php
@@ -690,7 +689,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         ?>
                         <br />
                         <label>
-                            <input id="chk_button_action_url_noopener" type="checkbox" v-model="button_action_url_noopener" />
+                            <input type="checkbox" id="wpfront-notification-bar-options-button_action_url_noopener" name="wpfront-notification-bar-options[button_action_url_noopener]" v-model="button_action_url_noopener" />
                             <span><?php echo __('No opener link.', 'wpfront-notification-bar'); ?></span>
                         </label>&#160;
                         <?php
@@ -699,11 +698,11 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         ?>
                         <br />
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[button_action]" value="2" v-model="button_action" />
+                            <input type="radio" id="wpfront-notification-bar-options-button_action-js" name="wpfront-notification-bar-options[button_action]" value="2" v-model="button_action" />
                             <span><?php echo __('Execute JavaScript', 'wpfront-notification-bar'); ?></span>
                         </label>
                         <br />
-                        <textarea rows="5" cols="75" name="wpfront-notification-bar-options[button_action_javascript]">{{button_action_javascript}}</textarea>
+                        <textarea rows="5" cols="75" id="wpfront-notification-bar-options-button_action_javascript" name="wpfront-notification-bar-options[button_action_javascript]">{{button_action_javascript}}</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -711,7 +710,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Close Bar on Button Click', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[button_action_close_bar]" v-model="button_action_close_bar" />
+                        <input type="checkbox" id="wpfront-notification-bar-options-button_action_close_bar" name="wpfront-notification-bar-options[button_action_close_bar]" v-model="button_action_close_bar" />
                     </td>
                 </tr>
             </table>
@@ -727,11 +726,11 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     </th>
                     <td>
                         <div>
-                            <label><input id="date-none" type="radio" class="date-type" name="wpfront-notification-bar-options[filter_date_type]" value="none" v-model="filter_date_type"/> <?php echo __('None', 'wpfront-notification-bar'); ?></label>
+                            <label><input type="radio" class="date-type" id="wpfront-notification-bar-options-filter_date_type-none" name="wpfront-notification-bar-options[filter_date_type]" value="none" v-model="filter_date_type"/> <?php echo __('None', 'wpfront-notification-bar'); ?></label>
                             <br />
-                            <label><input id="start-end-date" type="radio" class="date-type" name="wpfront-notification-bar-options[filter_date_type]" value="start_end" v-model="filter_date_type"/> <?php echo __('Start and End Date', 'wpfront-notification-bar'); ?></label>
+                            <label><input type="radio" class="date-type" id="wpfront-notification-bar-options-filter_date_type-start_end" name="wpfront-notification-bar-options[filter_date_type]" value="start_end" v-model="filter_date_type"/> <?php echo __('Start and End Date', 'wpfront-notification-bar'); ?></label>
                             <br />
-                            <label><input id="schedule-date" type="radio" class="date-type" name="wpfront-notification-bar-options[filter_date_type]" value="schedule" v-model="filter_date_type" /> <?php echo __('Recurring Schedule', 'wpfront-notification-bar'); ?></label>
+                            <label><input type="radio" class="date-type" id="wpfront-notification-bar-options-filter_date_type-schedule" name="wpfront-notification-bar-options[filter_date_type]" value="schedule" v-model="filter_date_type" /> <?php echo __('Recurring Schedule', 'wpfront-notification-bar'); ?></label>
                             <?php if(!$this->is_scheduling_available()) { ?>
                             <label style="color: red;"><?php printf(__('(minimum version supported is PHP 7.2, your version is PHP %s)', 'wpfront-notification-bar'), PHP_VERSION); ?></label>
                             <?php } ?>
@@ -773,12 +772,12 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     </th>
                     <td>
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_pages]" value="1" v-model="display_pages" />
+                            <input type="radio" id="wpfront-notification-bar-options-display_pages-all" name="wpfront-notification-bar-options[display_pages]" value="1" v-model="display_pages" />
                             <span><?php echo __('All pages.', 'wpfront-notification-bar'); ?></span>
                         </label>
                         <br />
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_pages]" value="2" v-model="display_pages"/>
+                            <input type="radio" id="wpfront-notification-bar-options-display_pages-landing" name="wpfront-notification-bar-options[display_pages]" value="2" v-model="display_pages"/>
                             <span><?php echo __('Only in landing page.', 'wpfront-notification-bar'); ?></span>&#160;
                             <?php
                             $description = __('The first page they visit on your website.', 'wpfront-notification-bar');
@@ -787,7 +786,17 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         </label>
                         <br />
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_pages]" value="3" v-model="display_pages"/>
+                            <input type="radio" id="wpfront-notification-bar-options-display_pages-url-contains" name="wpfront-notification-bar-options[display_pages]" value="5" v-model="display_pages"/>
+                            <span><?php echo __('If URL contains text', 'wpfront-notification-bar'); ?></span>&#160;
+                            <input class="regular-text" type="text" id="wpfront-notification-bar-options-filter_url_contains" name="wpfront-notification-bar-options[filter_url_contains]" v-model="filter_url_contains" />&#160;
+                            <?php
+                            $description = __('Notification will display if the URL contains this text.', 'wpfront-notification-bar');
+                            $this->echo_help_tooltip($description);
+                            ?>                   
+                        </label>
+                        <br />
+                        <label>
+                            <input type="radio" id="wpfront-notification-bar-options-display_pages-include" name="wpfront-notification-bar-options[display_pages]" value="3" v-model="display_pages"/>
                             <span><?php echo __('Include in following pages.', 'wpfront-notification-bar'); ?></span>&#160;
                             <?php
                             $description = __('Use the textbox below to specify the post IDs as a comma separated list.', 'wpfront-notification-bar');
@@ -797,7 +806,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <br />
                         <posts-filter-selection name="wpfront-notification-bar-options[include_pages]" v-model="include_pages" ></posts-filter-selection>
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_pages]" value="4" v-model="display_pages"/>
+                            <input type="radio" id="wpfront-notification-bar-options-display_pages-exclude" name="wpfront-notification-bar-options[display_pages]" value="4" v-model="display_pages"/>
                             <span><?php echo __('Exclude in following pages.', 'wpfront-notification-bar'); ?></span>&#160;
                             <?php
                             $description = __('Use the textbox below to specify the post IDs as a comma separated list.', 'wpfront-notification-bar');
@@ -817,7 +826,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Landing Page Cookie Name', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input class="regular-text" type="text" name="wpfront-notification-bar-options[landingpage_cookie_name]" v-model="landingpage_cookie_name" />&#160;
+                        <input class="regular-text" type="text" id="wpfront-notification-bar-options-landingpage_cookie_name" name="wpfront-notification-bar-options[landingpage_cookie_name]" v-model="landingpage_cookie_name" />&#160;
                         <?php
                         $description = __('Cookie name used to mark landing page. Useful when you have multiple WordPress installs under same domain.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
@@ -830,17 +839,17 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     </th>
                     <td>
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_roles]" value="1" v-model="display_roles" />
+                            <input type="radio" id="wpfront-notification-bar-options-display_roles-all" name="wpfront-notification-bar-options[display_roles]" value="1" v-model="display_roles" />
                             <span><?php echo __('All users.', 'wpfront-notification-bar'); ?></span>
                         </label>
                         <br />
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_roles]" value="2" v-model="display_roles" />
+                            <input type="radio" id="wpfront-notification-bar-options-display_roles-logged-in" name="wpfront-notification-bar-options[display_roles]" value="2" v-model="display_roles" />
                             <span><?php echo __('All logged in users.', 'wpfront-notification-bar'); ?></span>
                         </label>
                         <br />
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_roles]" value="3" v-model="display_roles" />
+                            <input type="radio" id="wpfront-notification-bar-options-display_roles-guest" name="wpfront-notification-bar-options[display_roles]" value="3" v-model="display_roles" />
                             <span><?php echo __('Guest users.', 'wpfront-notification-bar'); ?></span>&#160;
                             <?php
                             $description = __('Non-logged in users', 'wpfront-notification-bar');
@@ -849,13 +858,13 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         </label>
                         <br />
                         <label>
-                            <input type="radio" name="wpfront-notification-bar-options[display_roles]" value="4" v-model="display_roles"/>
+                            <input type="radio" id="wpfront-notification-bar-options-display_roles-roles" name="wpfront-notification-bar-options[display_roles]" value="4" v-model="display_roles"/>
                             <span><?php echo __('For following user roles', 'wpfront-notification-bar'); ?></span>&nbsp;<span>[<a target="_blank" rel="noopener" href="https://wpfront.com/nbtoure"><?php echo __('Manage Roles', 'wpfront-notification-bar'); ?>]</a></span>
                         </label>
                         <br />
                         <display-roles-settings name="wpfront-notification-bar-options[include_roles]" v-model="include_roles"></display-roles-settings>
                         <label>
-                            <input type="checkbox" name="wpfront-notification-bar-options[wp_emember_integration]" v-model="wp_emember_integration"/>
+                            <input type="checkbox" id="wpfront-notification-bar-options-wp_emember_integration" name="wpfront-notification-bar-options[wp_emember_integration]" v-model="wp_emember_integration"/>
                             <span><?php echo __('Enable WP eMember integration.', 'wpfront-notification-bar'); ?></span>
                         </label>
                     </td>
@@ -863,16 +872,16 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
             </table>
 
             <template id="posts-filter-selection">
-                <div>
-                    <input class="post-id-list" :name="name" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)"/>
+                <div :class="name">
+                    <input class="post-id-list" :id="name" :name="name" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)"/>
                     <div class="pages-selection">
                         <?php
                         $objects = $this->controller->get_filter_objects();
                         foreach ($objects as $key => $value) {
                         ?>
                             <div class="page-div">
-                                <label title="<?php echo esc_attr($value); ?>">
-                                    <input type="checkbox" value="<?php echo $key; ?>" v-model="selectedPosts" />
+                                <label title="<?php echo esc_attr($value); ?>" :id="'label_' + name + '_<?php echo $key; ?>'">
+                                    <input type="checkbox" :id="name + '_<?php echo $key; ?>'" value="<?php echo $key; ?>" v-model="selectedPosts" />
                                     <?php echo esc_html($value); ?>
                                 </label>
                             </div>
@@ -891,7 +900,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     ?>
                         <div class="role-div">
                             <label>
-                                <input type="checkbox" value="<?php echo $key; ?>" v-model="selectedRoles" />
+                                <input type="checkbox" :id="name + '_<?php echo $key; ?>'" value="<?php echo $key; ?>" v-model="selectedRoles" />
                                 <?php echo $value; ?>
                             </label>
                         </div>
@@ -900,13 +909,13 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     ?>
                     <div class="role-div">
                         <label>
-                            <input type="checkbox" value="<?php echo WPFront_Notification_Bar::ROLE_NOROLE; ?>" v-model="selectedRoles" />
+                            <input type="checkbox" :id="name + '_<?php echo WPFront_Notification_Bar::ROLE_NOROLE; ?>'" value="<?php echo WPFront_Notification_Bar::ROLE_NOROLE; ?>" v-model="selectedRoles" />
                             <?php echo __('[No Role]', 'wpfront-notification-bar'); ?>
                         </label>
                     </div>
                     <div class="role-div">
                         <label>
-                            <input type="checkbox" value="<?php echo WPFront_Notification_Bar::ROLE_GUEST; ?>" v-model="selectedRoles" />
+                            <input type="checkbox" :id="name + '_<?php echo WPFront_Notification_Bar::ROLE_GUEST; ?>'" value="<?php echo WPFront_Notification_Bar::ROLE_GUEST; ?>" v-model="selectedRoles" />
                             <?php echo __('[Guest]', 'wpfront-notification-bar'); ?>
                         </label>
                     </div>
@@ -1039,7 +1048,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                     '#808000',
                     '#7FFFD4',
                     '#FFFFFF'
-                ]" :model-value="modelValue" @active-change="$emit('update:modelValue', $event)" /></el-color-picker>
+                ]" :model-value="modelValue" @active-change="$emit('update:modelValue', $event)" :id="'cp_' + name" /></el-color-picker>
                 <input type="text" class="color-value" :name="name" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
             </template>
             <?php
@@ -1053,7 +1062,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Use Dynamic CSS URL', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[dynamic_css_use_url]" v-model="dynamic_css_use_url"/>
+                        <input type="checkbox" id="wpfront-notification-bar-options-dynamic_css_use_url" name="wpfront-notification-bar-options[dynamic_css_use_url]" v-model="dynamic_css_use_url"/>
                         &#160;
                         <?php
                         $description = __('Custom and dynamic CSS will be added through a URL instead of writing to the document. Enabling this setting is recommended if there are no conflicts, so that caching can be leveraged.', 'wpfront-notification-bar');
@@ -1066,7 +1075,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Custom CSS Class', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input class="regular-text" type="text" name="wpfront-notification-bar-options[custom_class]" v-model="custom_class" />
+                        <input class="regular-text" type="text" id="wpfront-notification-bar-options-custom_class" name="wpfront-notification-bar-options[custom_class]" v-model="custom_class" />
                     </td>
                 </tr>
                 <tr>
@@ -1074,7 +1083,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Custom CSS', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <textarea name="wpfront-notification-bar-options[custom_css]" rows="10" cols="75">{{custom_css}}</textarea>
+                        <textarea id="wpfront-notification-bar-options-custom_css" name="wpfront-notification-bar-options[custom_css]" rows="10" cols="75">{{custom_css}}</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -1082,7 +1091,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Add_Edit_V
                         <?php echo __('Enqueue in Footer', 'wpfront-notification-bar'); ?>
                     </th>
                     <td>
-                        <input type="checkbox" name="wpfront-notification-bar-options[css_enqueue_footer]" v-model="css_enqueue_footer" />&#160;
+                        <input type="checkbox" id="wpfront-notification-bar-options-css_enqueue_footer" name="wpfront-notification-bar-options[css_enqueue_footer]" v-model="css_enqueue_footer" />&#160;
                         <?php
                         $description = __('Enqueue CSS in footer.', 'wpfront-notification-bar');
                         $this->echo_help_tooltip($description);
