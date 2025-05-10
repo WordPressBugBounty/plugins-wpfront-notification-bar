@@ -45,7 +45,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar')) {
     class WPFront_Notification_Bar {
 
         //Constants
-        const VERSION = '3.5.0.04121';
+        const VERSION = '3.5.1.05102';
         const OPTIONS_GROUP_NAME = 'wpfront-notification-bar-options-group';
         const OPTION_NAME = 'wpfront-notification-bar-options';
         const PLUGIN_SLUG = 'wpfront-notification-bar';
@@ -231,6 +231,8 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar')) {
                 return;
             }
 
+            add_filter('upload_mimes', array($this, 'custom_upload_filter' ));
+
             $this->current_controller = $this->controllers[0];
 
             if(isset($_POST['submit']) || isset($_POST['submit2'])){
@@ -260,6 +262,18 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar')) {
                 wp_safe_redirect($current_url);
                 $this->kill();
             }
+        }
+
+        /**
+         * Custom upload filter to remove pdf mime type.
+         *
+         * @param array<string,string> $mime_types
+         * @return array<string,string>
+         */
+        public function custom_upload_filter( $mime_types ) {
+            unset($mime_types['pdf']);
+
+            return $mime_types;
         }
 
         /**
