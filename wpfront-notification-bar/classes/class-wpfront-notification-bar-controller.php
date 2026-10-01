@@ -270,11 +270,11 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Controller
 
             $this->write_debug_logs();
 
+            $log_prefix = $this->get_log_prefix();
             if ($this->options->debug_mode) {
-                $log_prefix = $this->get_log_prefix();
                 ?>
                 <script type="text/javascript">
-                <?php echo "console.log('$log_prefix Starting JS scripts execution.');" ?>
+                <?php printf('console.log(%s);', wp_json_encode("$log_prefix Starting JS scripts execution.")); ?>
                 </script>
             <?php }
             ?>
@@ -286,7 +286,7 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Controller
                     } else {
             <?php
             if ($this->options->debug_mode) {
-                echo "console.log('$log_prefix Waiting for JS function \"wpfront_notification_bar\".');";
+                printf('console.log(%s);', wp_json_encode("$log_prefix Waiting for JS function \"wpfront_notification_bar\"."));
             }
             ?>
                         setTimeout(__load_wpfront_notification_bar, 100);
@@ -317,15 +317,17 @@ if (!class_exists('\WPFront\Notification_Bar\WPFront_Notification_Bar_Controller
 
             $log_prefix = $this->get_log_prefix();
 
-            echo "<!-- '$log_prefix Page generated at $now_str. '-->";
+            echo '<!-- ' . esc_html("$log_prefix Page generated at $now_str.") . ' -->';
             echo '<script type="text/javascript">';
-            echo "console.log('$log_prefix Page generated at $now_str.');";
+            printf('console.log(%s);', wp_json_encode("$log_prefix Page generated at $now_str."));
             foreach ($this->logs as $message => $args) {
                 if (empty($args)) {
-                    printf("console.log('$message');");
+                    $text = $message;
                 } else {
-                    vprintf("console.log('$message');", $args);
+                    $formatted = vsprintf($message, $args);
+                    $text = ($formatted !== false) ? $formatted : $message;
                 }
+                printf('console.log(%s);', wp_json_encode($text));
             }
             echo '</script>';
 

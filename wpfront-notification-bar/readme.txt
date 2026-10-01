@@ -3,9 +3,9 @@ Contributors: syammohanm
 Donate link: http://wpfront.com/donate/
 Tags: notification bar, wordpress notification bar, top bar, bottom bar, notification, bar, quick bar, fixed bar, sticky bar, message bar, message, floating bar, notice, sticky header, special offer, discount offer, offer, important, attention bar, highlight bar, popup bar, hellobar, heads up, heads up bar, headsup, headsupbar, popup, Toolbar
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 3.5.1
+Stable tag: 3.5.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -69,6 +69,9 @@ The new version(1.3) allows you to filter the bar based on user roles. In this c
 1. Settings page.
 
 == Changelog ==
+
+= 3.5.2 =
+* Security fix: Reflected XSS in debug log output. Thanks to Wordfence and Nabil Irawan!
 
 = 3.5.1 =
 * Pdf files are not allowed to upload.
@@ -231,6 +234,9 @@ The new version(1.3) allows you to filter the bar based on user roles. In this c
 * Initial release
 
 == Upgrade Notice ==
+
+= 3.5.2 =
+* Security fix.
 
 = 3.5.1 =
 * Pdf files are not allowed to upload.
